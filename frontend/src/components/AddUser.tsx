@@ -1,4 +1,4 @@
-import {User} from '../types.ts'
+import {User} from '../types/types.ts'
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 
 import React, {useState} from "react";

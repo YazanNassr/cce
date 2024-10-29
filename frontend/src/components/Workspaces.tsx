@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import WorkspacePaper from "./ui/WorkspacePaper.tsx";
 import {useQuery} from "@tanstack/react-query";
-import {Project} from "../types.ts"
+import {Project} from "../types/types.ts"
 import {getProjects} from "../services/api/projectApi.ts";
 import Typography from "@mui/material/Typography";
 
@@ -19,7 +19,7 @@ export default function Workspaces() {
                 alignItems: "center"
             }}
         >
-            {isSuccess && data.map(project => <WorkspacePaper key={project.id} name={project.name} />)}
+            {isSuccess && data.map(project => <WorkspacePaper key={project.id} projectId={project.id??""} name={project.name} />)}
             {error && <Typography variant={"h6"}>An Error Occurred...</Typography>}
         </Box>
     );

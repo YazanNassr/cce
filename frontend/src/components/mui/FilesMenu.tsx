@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {useWorkspaceContext} from "../../WorkspaceContext.tsx";
+import {useWorkspaceContext} from "../../hooks/WorkspaceContext.tsx";
 
 const ITEM_HEIGHT = 48;
 

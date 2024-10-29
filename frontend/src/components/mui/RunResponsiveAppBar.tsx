@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import LongMenu from "./FilesMenu.tsx";
-import {useWorkspaceContext} from "../../WorkspaceContext.tsx";
+import {useWorkspaceContext} from "../../hooks/WorkspaceContext.tsx";
 
 export default function RunResponsiveAppBar() {
     const {workspace} = useWorkspaceContext()

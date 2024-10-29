@@ -4,8 +4,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import {deleteProject} from "../../services/api/projectApi.ts";
 
-export default function WorkspacePaper({ name } : {name: string}) {
+export default function WorkspacePaper({ projectId, name } : {projectId: string, name: string}) {
+    const deleteWorkspace = () => {
+        deleteProject(projectId)
+            .then(() => {window.location.reload()})
+            .catch((error: Error) => console.log(error));
+    }
     return (
         <Paper
             variant="outlined"
@@ -28,7 +34,7 @@ export default function WorkspacePaper({ name } : {name: string}) {
                     textDecoration: "none",
                     color: "primary.contrastText",
                 }}
-                href="/editor"
+                href={"/editor/" + projectId}
             >
                 {name}
             </Typography>
@@ -39,7 +45,9 @@ export default function WorkspacePaper({ name } : {name: string}) {
                         sx={{ m: 0.7, color: "primary.contrastText" }}
                     />
                 </IconButton>
-                <IconButton>
+                <IconButton
+                    onClick={deleteWorkspace}
+                >
                     <DeleteIcon
                         sx={{ m: 0.7, color: "primary.contrastText" }}
                     />

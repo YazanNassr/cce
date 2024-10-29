@@ -2,8 +2,8 @@ import CodeEditor from "../components/CodeEditor.tsx";
 import Grid from "@mui/material/Grid2";
 import RunAppBar from "../components/mui/RunResponsiveAppBar.tsx"
 import TextArea from "../components/ui/TextArea.tsx";
-import {Workspace} from "../types.ts";
-import {WorkspaceContext} from "../WorkspaceContext.tsx";
+import {Workspace} from "../types/types.ts";
+import {WorkspaceContext} from "../hooks/WorkspaceContext.tsx";
 import {useState} from "react";
 import MainResponsiveAppBar from "../components/mui/MainResponsiveAppBar.tsx";
 

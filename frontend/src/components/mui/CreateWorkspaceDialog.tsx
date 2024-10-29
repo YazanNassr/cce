@@ -6,8 +6,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {useState} from "react";
+import {createProject} from "../../services/api/projectApi.ts";
 
 export default function FormDialog({ open, handleClose } : {open: boolean, handleClose: () => void}) {
+    const [projectName, setProjectName] = useState<string>();
+
     return (
             <Dialog
                 open={open}
@@ -16,10 +20,10 @@ export default function FormDialog({ open, handleClose } : {open: boolean, handl
                     component: 'form',
                     onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                         event.preventDefault();
-                        const formData = new FormData(event.currentTarget);
-                        const formJson = Object.fromEntries(formData.entries());
-                        const workspaceName = formJson.name;
-                        console.log(workspaceName);
+
+                        createProject({name: projectName ?? "untitled", files: []})
+                            .catch(err => console.log(err))
+
                         handleClose();
                     },
                 }}
@@ -39,6 +43,8 @@ export default function FormDialog({ open, handleClose } : {open: boolean, handl
                         type="text"
                         fullWidth
                         variant="standard"
+                        value={projectName}
+                        onChange={(e) => setProjectName(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>

@@ -1,4 +1,4 @@
-import {User} from "../types.ts";
+import {User} from "../types/types.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
 import { getUsers, deleteUser } from "../services/api/userApi.ts"
