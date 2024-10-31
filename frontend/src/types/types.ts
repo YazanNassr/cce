@@ -6,6 +6,7 @@ export type User = {
 
 export type File = {
     parentPath: string;
+    filePath: string;
     fileName: string;
     sourceCode: string;
 }

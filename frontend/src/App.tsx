@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 
 export default function App() {
     return (
-        <StompSessionProvider url={"http://localhost:8080/stomp"} >
+        <StompSessionProvider url={"ws://localhost:8080/stomp"}>
             <QueryClientProvider client={queryClient}>
                 <ThemeProvider theme={defaultTheme}>
                     <Container>

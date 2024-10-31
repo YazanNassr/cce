@@ -6,16 +6,12 @@ import {IMessage, useStompClient, useSubscription} from "react-stomp-hooks";
 export default function CodeEditor() {
     const {workspace, setWorkspace} = useWorkspaceContext()
     const stompClient = useStompClient();
-    const token = (sessionStorage.getItem("jwt").slice(6));
 
     const sendMessage = (modification : ReplacementModification) => {
         if (stompClient) {
             stompClient.publish({
-                destination: "/modify",
+                destination: "/app/modify",
                 body: JSON.stringify(modification),
-                headers: {
-                    Authorization: token
-                }
             })
         }
     }
@@ -30,11 +26,12 @@ export default function CodeEditor() {
         })
     }
 
-    useSubscription("/topic/modify", (message: IMessage) => {
+    const encodedFilePath = encodeURIComponent(workspace.activeFile.filePath);
+    const encodedProjectId = encodeURIComponent(workspace.project.id);
+
+    useSubscription(`/topic/${encodedProjectId}/${encodedFilePath}`, (message: IMessage) => {
         const modification : ReplacementModification = JSON.parse(message.body);
         modifyFile(modification)
-    }, {
-        Authorization: token
     })
 
     function handleEditorChange(value, event) {
@@ -42,7 +39,7 @@ export default function CodeEditor() {
 
         const modifications = event.changes.map(c => ({
             projectId: workspace.project.id,
-            filePath: workspace.activeFile.fileName,
+            filePath: `${workspace.activeFile.parentPath}/${workspace.activeFile.fileName}`,
             start: c.rangeOffset,
             end: c.rangeOffset + c.rangeLength,
             newVal: c.text
