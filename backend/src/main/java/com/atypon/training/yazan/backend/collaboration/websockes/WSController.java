@@ -10,6 +10,11 @@ import org.springframework.stereotype.Controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -24,19 +29,15 @@ public class WSController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/modify")
-    public void modify(@Payload ReplaceModification modification) {
-        modification.setProjectId(URLDecoder.decode(modification.getProjectId(), StandardCharsets.UTF_8));
-        modification.setFilePath(URLDecoder.decode(modification.getFilePath(), StandardCharsets.UTF_8));
-
+    public void modify(@Payload ReplaceModification modification) throws URISyntaxException {
         var proj = projectsManager.getInMemoryProject(modification.getProjectId());
         proj.queueModification(modification);
 
         String encodedProjectId = URLEncoder.encode(modification.getProjectId(), StandardCharsets.UTF_8);
         String encodedFilePath = URLEncoder.encode(modification.getFilePath(), StandardCharsets.UTF_8);
 
-        messagingTemplate.convertAndSend(
-                String.format("/topic/%s/%s", encodedProjectId, encodedFilePath),
-                proj.applyModification());
+        String path = String.format("/topic/%s/%s", encodedProjectId, encodedFilePath);
+        messagingTemplate.convertAndSend(path, proj.applyModification());
     }
 
     @MessageMapping("/{projectId}/save")

@@ -21,6 +21,8 @@ export type Project = {
 export type Workspace = {
     project: Project;
     activeFile: File;
+    input: string;
+    output: string;
 }
 
 export type WorkspaceState = {

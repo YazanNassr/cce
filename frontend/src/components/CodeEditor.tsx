@@ -5,6 +5,7 @@ import {IMessage, useStompClient, useSubscription} from "react-stomp-hooks";
 
 export default function CodeEditor() {
     const {workspace, setWorkspace} = useWorkspaceContext()
+
     const stompClient = useStompClient();
 
     const sendMessage = (modification : ReplacementModification) => {
@@ -27,7 +28,7 @@ export default function CodeEditor() {
     }
 
     const encodedFilePath = encodeURIComponent(workspace.activeFile.filePath);
-    const encodedProjectId = encodeURIComponent(workspace.project.id);
+    const encodedProjectId = encodeURIComponent(workspace.project.id??"");
 
     useSubscription(`/topic/${encodedProjectId}/${encodedFilePath}`, (message: IMessage) => {
         const modification : ReplacementModification = JSON.parse(message.body);

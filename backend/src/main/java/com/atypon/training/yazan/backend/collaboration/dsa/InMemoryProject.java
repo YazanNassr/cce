@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Synchronized;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -32,6 +33,22 @@ public class InMemoryProject {
     }
 
     public void queueModification(ReplaceModification modification) {
+        for (var mod : queue) {
+            int delta = 0;
+
+            if (mod.getStart() > modification.getStart()) {
+                continue;
+            }
+
+            if (Objects.equals(mod.getNewVal(), "")) {
+                delta -= mod.getEnd() - mod.getStart();
+            } else {
+                delta += mod.getNewVal().length();
+            }
+
+            modification.setStart(modification.getStart() + delta);
+            modification.setEnd(modification.getEnd() + delta);
+        }
         queue.add(modification);
     }
 

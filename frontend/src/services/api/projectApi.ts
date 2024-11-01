@@ -32,3 +32,10 @@ export async function createProject(project: Project) : Promise<Project> {
     const response = await axios.post(`${remoteBaseUrl()}`, project, getAxiosConfig());
     return response.data;
 }
+
+export async function runProject(projectId: string, input: string, mainFilePath: string) : Promise<string> {
+    const response = await axios.post(`${remoteBaseUrl()}/${projectId}/run`, {
+        mainFilePath, input
+    }, getAxiosConfig());
+    return response.data;
+}

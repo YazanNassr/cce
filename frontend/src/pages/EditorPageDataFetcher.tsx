@@ -21,7 +21,9 @@ export default function EditorPageDataFetcher() {
     if (data) {
         const workspace: Workspace = {
             "project": data,
-            "activeFile": data.files[0]
+            "activeFile": data.files[0],
+            "input": "",
+            "output": ""
         }
 
         return <EditorPage w={workspace}/>

@@ -2,8 +2,8 @@ import {TextareaAutosize} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-export default function TextArea({ title, readonly }
-                                     : { title: string; readonly: boolean }) {
+export default function TextArea({ title, readonly, text, setText }
+                                     : { title: string; readonly: boolean, text: string, setText: any }) {
     return (
         <Box
             sx={{
@@ -28,6 +28,8 @@ export default function TextArea({ title, readonly }
             </Typography>
 
             <TextareaAutosize
+                value={text}
+                onChange={(e) => setText(e.target.value)}
                 minRows={10}
                 maxRows={10}
                 style={{

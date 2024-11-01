@@ -8,8 +8,10 @@ import {useState} from "react";
 import MainResponsiveAppBar from "../components/mui/MainResponsiveAppBar.tsx";
 
 export default function EditorPage({w} : {w: Workspace}) {
-
     const [workspace, setWorkspace] = useState<Workspace>(w);
+
+    const setInputText = (newVal: string) => setWorkspace({...workspace, input: newVal});
+    const setOutputText = (newVal: string) => setWorkspace({...workspace, output: newVal});
 
     return (
         <WorkspaceContext.Provider value={{workspace, setWorkspace}}>
@@ -32,6 +34,8 @@ export default function EditorPage({w} : {w: Workspace}) {
                 >
                     <Grid size={{ xs: 12, md: 4 }} >
                         <TextArea
+                            text={workspace.input}
+                            setText={setInputText}
                             title={"Input"}
                             readonly={false}
                         />
@@ -39,6 +43,8 @@ export default function EditorPage({w} : {w: Workspace}) {
 
                     <Grid size={{ xs: 12, md: 4 }} >
                         <TextArea
+                            text={workspace.output}
+                            setText={setOutputText}
                             title={"Output"}
                             readonly={true}
                         />
